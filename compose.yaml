@@ -1,0 +1,19 @@
+services:
+  database:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: admin
+      POSTGRES_USER: admin
+      POSTGRES_DB: proyecto_base
+    volumes:
+      - database:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+  jagear:
+    image: jaegertracing/all-in-one:latest
+    ports:
+      - "16686:16686"
+      - "4318:4318"
+
+volumes:
+  database:
