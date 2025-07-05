@@ -1,0 +1,104 @@
+package org.nofre.api.base.common.crud.controller;
+
+import io.micrometer.observation.annotation.Observed;
+import lombok.RequiredArgsConstructor;
+import org.nofre.api.base.common.controller.CommonController;
+import org.nofre.api.base.common.controller.model.CommonRq;
+import org.nofre.api.base.common.controller.model.CommonRs;
+import org.nofre.api.base.common.crud.exception.CommonCrudException;
+import org.nofre.api.base.common.crud.model.CommonDto;
+import org.nofre.api.base.common.crud.model.Paginated;
+import org.nofre.api.base.common.crud.service.CommonCrudService;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+@Observed
+@RequiredArgsConstructor
+public abstract class CommonCrudControllerImp<D extends CommonDto, S extends CommonCrudService<D>>
+        extends CommonController {
+
+    protected final S service;
+
+
+    /**
+     * Recupera un elemento individual por su ID.
+     *
+     * @param id el identificador único del elemento a recuperar
+     * @return un {@code ResponseEntity} conteniendo un objeto {@code CommonRs<D>} con el elemento solicitado
+     * @throws CommonCrudException si ocurre un error al recuperar el elemento
+     */
+    @GetMapping("{id}")
+    public ResponseEntity<CommonRs<D>> getItem(@PathVariable Long id) throws CommonCrudException {
+        return getResponse(service.getById(id));
+    }
+
+    /**
+     * Recupera una lista paginada de entidades con soporte para filtrado, ordenación y paginación.
+     *
+     * @param offset  la posición inicial para el conjunto de resultados paginado, por defecto es 0
+     * @param limit   el número máximo de resultados a devolver, por defecto es 50
+     * @param sort    el campo por el cual ordenar los resultados, por defecto es "id"
+     * @param dir     la dirección de ordenación, "ASC" para ascendente o "DESC" para descendente, por defecto es "ASC"
+     * @param filters un mapa de filtros adicionales para aplicar a la consulta; opcional
+     * @return un {@code ResponseEntity} conteniendo un {@code CommonRs<Paginated<D>>} con la lista paginada de entidades
+     * @throws CommonCrudException si ocurre un error durante la recuperación de la lista paginada
+     */
+    @GetMapping
+    public ResponseEntity<CommonRs<Paginated<D>>> getPaginatedList(
+            @RequestParam(defaultValue = "0") Integer offset,
+            @RequestParam(defaultValue = "50") Integer limit,
+            @RequestParam(defaultValue = "id") String sort,
+            @RequestParam(defaultValue = "ASC") String dir,
+            @RequestParam(required = false) Map<String, String> filters
+    ) throws CommonCrudException {
+        //ELiminamos los filtros que no vamos a usar
+        if (!filters.isEmpty()) {
+            filters.remove("offset");
+            filters.remove("limit");
+            filters.remove("sort");
+            filters.remove("dir");
+        }
+        return paginatedResponse(service.getPaginatedList(offset, limit, sort, dir, filters));
+    }
+
+    /**
+     * Guarda un nuevo elemento utilizando los datos proporcionados en la solicitud.
+     *
+     * @param rq el objeto {@code CommonRq<D>} que contiene los datos a guardar
+     * @return un {@code ResponseEntity<CommonRs<D>>} que contiene el elemento guardado y detalles de la respuesta asociados
+     * @throws CommonCrudException si ocurre un error durante la operación de guardado
+     */
+    @PostMapping
+    public ResponseEntity<CommonRs<D>> saveItem(@RequestBody CommonRq<D> rq) throws CommonCrudException {
+        return createdResponse(service.save(rq.data()));
+    }
+
+    /**
+     * Actualiza un elemento existente utilizando los datos proporcionados en la solicitud.
+     *
+     * @param rq el objeto {@code CommonRq<D>} que contiene los datos a actualizar
+     * @return un {@code ResponseEntity<CommonRs<D>>} que contiene el elemento actualizado y detalles de la respuesta asociados
+     * @throws CommonCrudException si ocurre un error durante la operación de actualización
+     */
+    @PutMapping
+    public ResponseEntity<CommonRs<D>> updateItem(@RequestBody CommonRq<D> rq) throws CommonCrudException {
+        return updatedResponse(service.update(rq.data()));
+    }
+
+    /**
+     * Elimina un elemento identificado por su ID único.
+     *
+     * @param id el identificador único del elemento a eliminar
+     * @return un {@code ResponseEntity<CommonRs<Void>>} indicando el resultado de la operación de eliminación,
+     * típicamente una respuesta con código de estado HTTP 204 (Sin Contenido)
+     * @throws CommonCrudException si ocurre un error durante el proceso de eliminación
+     */
+    @DeleteMapping("{id}")
+    public ResponseEntity<CommonRs<Void>> deleteItem(@PathVariable Long id) throws CommonCrudException {
+        service.deleteById(id);
+        return deletedResponse();
+    }
+
+}
