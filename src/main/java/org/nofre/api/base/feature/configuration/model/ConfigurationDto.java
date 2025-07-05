@@ -1,8 +1,8 @@
-package org.nofre.api.configuration;
+package org.nofre.api.base.feature.configuration.model;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.nofre.api.base.common.crud.CommonDto;
+import org.nofre.api.base.common.crud.model.CommonDto;
 
 @Data
 @EqualsAndHashCode(callSuper = true)

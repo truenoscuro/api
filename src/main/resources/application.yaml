@@ -1,3 +1,7 @@
+security:
+  secret-key: "hola4321431ekreqwhrieqwhyr1hp43u124hu32huhdqehjñrhewqrhp12yh412"
+  jwt-expiration: 10000000
+
 spring:
   application:
     name: api

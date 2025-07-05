@@ -1,4 +1,4 @@
-package org.nofre.api.base.common.model;
+package org.nofre.api.base.common.crud.model;
 
 import lombok.*;
 

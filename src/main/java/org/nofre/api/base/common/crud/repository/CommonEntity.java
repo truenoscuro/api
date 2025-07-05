@@ -1,4 +1,4 @@
-package org.nofre.api.base.common.crud;
+package org.nofre.api.base.common.crud.repository;
 
 
 import jakarta.persistence.*;
@@ -32,7 +32,7 @@ public abstract class CommonEntity {
     private boolean active = true;
 
     @CreatedDate
-    @Column( updatable = false)
+    @Column(updatable = false)
     private Instant createdAt;
 
     @CreatedBy

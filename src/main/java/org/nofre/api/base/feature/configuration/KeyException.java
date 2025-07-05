@@ -1,4 +1,4 @@
-package org.nofre.api.configuration;
+package org.nofre.api.base.feature.configuration;
 
 public class KeyException extends RuntimeException {
 

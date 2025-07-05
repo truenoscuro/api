@@ -1,4 +1,4 @@
-package org.nofre.api.base.common.crud;
+package org.nofre.api.base.common.crud.model;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

@@ -1,11 +1,14 @@
 package org.nofre.api.base.common.controller;
 
 
-import org.nofre.api.base.common.model.Paginated;
+import io.micrometer.observation.annotation.Observed;
+import org.nofre.api.base.common.controller.model.CommonRs;
+import org.nofre.api.base.common.crud.model.Paginated;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+@Observed
 public abstract class CommonController {
 
     public <T> ResponseEntity<CommonRs<T>> response(T data, HttpStatus status, HttpMethod method) {
@@ -24,6 +27,10 @@ public abstract class CommonController {
 
     public <T> ResponseEntity<CommonRs<T>> createdResponse(T data) {
         return response(data, HttpStatus.CREATED, HttpMethod.POST);
+    }
+
+    public <T> ResponseEntity<CommonRs<T>> postResponse(T data) {
+        return response(data, HttpStatus.OK, HttpMethod.POST);
     }
 
     public <T> ResponseEntity<CommonRs<T>> updatedResponse(T data) {

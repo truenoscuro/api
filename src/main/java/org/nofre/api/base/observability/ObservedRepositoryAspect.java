@@ -8,8 +8,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
-import org.springframework.aop.support.AopUtils;
-import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.stereotype.Component;
 
 
@@ -21,20 +19,17 @@ public class ObservedRepositoryAspect {
 
     private final ObservationRegistry registry;
 
-    @Pointcut("within(@org.nofre.api.base.observability.ObservedRepository *)")
+    @Pointcut("within(@org.nofre.api.base.observability.annotation.ObservedRepository *)")
     public void withinPointcut() {
     }
 
-    @Pointcut("execution(* (@org.nofre.api.base.observability.ObservedRepository *).*(..))")
+    @Pointcut("execution(* (@org.nofre.api.base.observability.annotation.ObservedRepository *).*(..))")
     public void executionPointcut() {
     }
 
 
     @Around("withinPointcut() || executionPointcut()")
     public Object wrapWithObservation(ProceedingJoinPoint pjp) throws Throwable {
-        Class<?> targetClass = AopUtils.getTargetClass(pjp.getTarget());
-        // Buscar la anotación recursivamente en la jerarquía
-        ObservedRepository observedRepository = AnnotationUtils.findAnnotation(targetClass, ObservedRepository.class);
 
         String className = "ObservabilityRepository";
         String kebabClassName = className.replaceAll("([a-z])([A-Z])", "$1-$2").toLowerCase();

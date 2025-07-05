@@ -1,6 +1,6 @@
 package org.nofre.api.base.configuration;
 
-import org.nofre.api.base.common.controller.CommonRs;
+import org.nofre.api.base.common.controller.model.CommonRs;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

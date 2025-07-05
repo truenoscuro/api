@@ -1,6 +1,6 @@
-package org.nofre.api.base.common.crud;
+package org.nofre.api.base.common.crud.repository;
 
-import org.nofre.api.base.observability.ObservedRepository;
+import org.nofre.api.base.observability.annotation.ObservedRepository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.NoRepositoryBean;

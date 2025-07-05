@@ -1,4 +1,4 @@
-package org.nofre.api.base.observability;
+package org.nofre.api.base.observability.annotation;
 
 import java.lang.annotation.*;
 

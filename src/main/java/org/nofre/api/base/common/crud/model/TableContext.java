@@ -1,4 +1,4 @@
-package org.nofre.api.base.common.crud;
+package org.nofre.api.base.common.crud.model;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.data.domain.Sort;

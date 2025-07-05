@@ -1,6 +1,8 @@
-package org.nofre.api.base.common.controller;
+package org.nofre.api.base.common.controller.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 

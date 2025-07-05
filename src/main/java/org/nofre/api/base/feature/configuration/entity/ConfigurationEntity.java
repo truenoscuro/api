@@ -1,21 +1,21 @@
-package org.nofre.api.configuration;
+package org.nofre.api.base.feature.configuration.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
-import org.nofre.api.base.common.crud.CommonEntity;
+import org.nofre.api.base.common.crud.repository.CommonEntity;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "configuration")
+@Table(name = "configurations")
 public class ConfigurationEntity extends CommonEntity {
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     public String key;
 
-
+    @Column(nullable = false)
     public String value;
 }
