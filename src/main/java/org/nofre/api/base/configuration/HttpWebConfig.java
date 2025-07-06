@@ -22,25 +22,12 @@ public class HttpWebConfig implements WebMvcConfigurer {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        return http
-                .cors(AbstractHttpConfigurer::disable)
-                .csrf(AbstractHttpConfigurer::disable)
-                .anonymous(anonymous -> anonymous
-                        .principal("anonymous")
+        return http.cors(AbstractHttpConfigurer::disable).csrf(AbstractHttpConfigurer::disable).anonymous(anonymous -> anonymous.principal("anonymous")
                         //TODO aqui se debe sacar del repositorio
-                        .authorities("ROLE_ANONYMOUS")
-                )
+                        .authorities("ROLE_ANONYMOUS"))
                 //No le añado seguridad
-                .authorizeHttpRequests(request -> request
-                        .requestMatchers(
-                                "/api/transactions/lang/**",
-                                "/api/auth/login",
-                                "/actuator/**"  // <-- Esta es la forma correcta
-                        ).permitAll()
-                        .anyRequest().authenticated()
-                )
-                .addFilterBefore(bearerTokenFilter, UsernamePasswordAuthenticationFilter.class)
-                .build();
+                .authorizeHttpRequests(request -> request.requestMatchers("/api/transactions/lang/**", "/api/auth/login", "/swagger-ui/**", "/v3/api-docs/**", "/actuator/**"  // <-- Esta es la forma correcta
+                ).permitAll().anyRequest().authenticated()).addFilterBefore(bearerTokenFilter, UsernamePasswordAuthenticationFilter.class).build();
     }
 
     @Override
