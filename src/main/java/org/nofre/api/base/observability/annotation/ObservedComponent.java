@@ -10,7 +10,6 @@ import java.lang.annotation.*;
 @Observed
 @Component
 @Documented
-@RequestMapping
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ObservedComponent {
