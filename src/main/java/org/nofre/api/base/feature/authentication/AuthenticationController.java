@@ -5,6 +5,7 @@ import org.nofre.api.base.common.controller.ApiRestController;
 import org.nofre.api.base.common.controller.CommonController;
 import org.nofre.api.base.common.controller.model.CommonRq;
 import org.nofre.api.base.common.controller.model.CommonRs;
+import org.nofre.api.base.feature.authentication.exception.LoginException;
 import org.nofre.api.base.feature.authentication.model.AuthRs;
 import org.nofre.api.base.feature.authentication.model.AuthUser;
 import org.nofre.api.base.feature.user.exception.EmailException;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @RequiredArgsConstructor
-@ApiRestController("authentication")
+@ApiRestController("auth")
 public class AuthenticationController extends CommonController {
 
     private final AuthenticationService authenticationService;

@@ -1,15 +1,15 @@
 package org.nofre.api.base.feature.authentication.service;
 
 import lombok.RequiredArgsConstructor;
-import org.nofre.api.base.common.service.BearerTokenService;
 import org.nofre.api.base.feature.authentication.AuthenticationService;
-import org.nofre.api.base.feature.authentication.LoginException;
+import org.nofre.api.base.feature.authentication.exception.LoginException;
 import org.nofre.api.base.feature.authentication.model.AuthRs;
 import org.nofre.api.base.feature.authentication.model.AuthUser;
 import org.nofre.api.base.feature.user.UserService;
 import org.nofre.api.base.feature.user.exception.EmailException;
 import org.nofre.api.base.feature.user.model.UserDto;
 import org.nofre.api.base.observability.annotation.ObservedService;
+import org.nofre.api.base.security.BearerTokenService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 @ObservedService

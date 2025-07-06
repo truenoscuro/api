@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.nofre.api.base.common.crud.repository.CommonEntity;
-import org.nofre.api.base.feature.role.entity.RoleEntity;
+import org.nofre.api.base.feature.rolepermission.role.entity.RoleEntity;
 
 import java.util.HashSet;
 import java.util.Set;

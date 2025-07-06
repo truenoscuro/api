@@ -17,6 +17,6 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ApiRestController {
 
-    @AliasFor(annotation = RequestMapping.class, attribute = "value") String[] value() default {};
+    @AliasFor(annotation = RequestMapping.class, attribute = "value") String[] value();
 
 }

@@ -101,4 +101,19 @@ public abstract class CommonCrudControllerImp<D extends CommonDto, S extends Com
         return deletedResponse();
     }
 
+
+    /**
+     * Ejecuta una operación de búsqueda basada en los criterios de filtrado proporcionados y devuelve una lista paginada de resultados.
+     *
+     * @param rq el objeto {@code CommonRq<CustomFilter>} que contiene los criterios de filtrado para la operación de búsqueda
+     * @return un {@code ResponseEntity} que contiene un objeto {@code CommonRs<Paginated<D>>} con la lista paginada de resultados
+     * @throws CommonCrudException si ocurre un error durante la ejecución de la operación de búsqueda
+     */
+    @PostMapping("search")
+    public ResponseEntity<CommonRs<Paginated<D>>> search(
+            @RequestBody CommonRq<PaginatedSearch> rq
+    ) throws CommonCrudException {
+        return postResponse(service.getPaginatedList(rq.data()));
+    }
+
 }

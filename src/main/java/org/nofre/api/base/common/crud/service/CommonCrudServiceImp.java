@@ -2,6 +2,7 @@ package org.nofre.api.base.common.crud.service;
 
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
+import org.nofre.api.base.common.crud.controller.PaginatedSearch;
 import org.nofre.api.base.common.crud.exception.CommonCrudException;
 import org.nofre.api.base.common.crud.exception.IdCrudException;
 import org.nofre.api.base.common.crud.mapper.CommonCrudMapper;
@@ -9,11 +10,12 @@ import org.nofre.api.base.common.crud.model.CommonDto;
 import org.nofre.api.base.common.crud.model.Paginated;
 import org.nofre.api.base.common.crud.repository.CommonEntity;
 import org.nofre.api.base.common.crud.repository.CommonRepository;
-import org.nofre.api.base.common.crud.repository.GenericSpecification;
+import org.nofre.api.base.common.crud.repository.specification.GenericSpecification;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Map;
 
@@ -47,7 +49,7 @@ public abstract class CommonCrudServiceImp<
 
     @Override
     public D update(D dto) throws CommonCrudException {
-        if (noExistById(dto.getId())) {
+        if (existById(dto.getId())) {
             throw new IdCrudException(tableName, dto.getId());
         }
         return save(dto);
@@ -55,7 +57,7 @@ public abstract class CommonCrudServiceImp<
 
     @Override
     public void deleteById(Long id) throws CommonCrudException {
-        if (noExistById(id)) {
+        if (existById(id)) {
             throw new IdCrudException(tableName, id);
         }
         repository.deleteById(id);
@@ -67,26 +69,50 @@ public abstract class CommonCrudServiceImp<
             String sort, String dir,
             Map<String, String> filters
     ) throws CommonCrudException {
-        Sort.Direction direction = Sort.Direction.fromString(dir.toUpperCase());
+        return getPaginatedList(offset, limit, sort, dir, specification.getSpecification(filters));
+    }
 
+    private Pageable getPageable(Integer offset, Integer limit, String sort, String dir) {
+        Sort.Direction direction = Sort.Direction.fromString(dir.toUpperCase());
+        return PageRequest.of(
+                offset,
+                limit,
+                Sort.by(direction, sort)
+        );
+    }
+
+    private Paginated<D> getPaginatedList(Integer offset, Integer limit,
+                                          String sort, String dir,
+                                          Specification<E> specification) throws CommonCrudException {
+
+
+        Sort.Direction direction = Sort.Direction.fromString(dir.toUpperCase());
         Pageable pageable = PageRequest.of(
                 offset,
                 limit,
                 Sort.by(direction, sort)
         );
-
-        Page<E> page = repository.findAll(
-                specification.getSpecificationFromFilters(filters),
-                pageable);
-
+        Page<E> page = repository.findAll(specification, pageable);
         return new Paginated<>(mapper.toDtoList(page.getContent()), page);
 
     }
 
     @Override
-    public boolean noExistById(Long id) {
-        return id == null || !repository.existsById(id);
+    public Paginated<D> getPaginatedList(PaginatedSearch filter) throws CommonCrudException {
+
+        return getPaginatedList(
+                filter.offset(),
+                filter.limit(),
+                filter.sort(),
+                filter.dir(),
+                specification.getSpecification(filter.filters()));
     }
+
+    @Override
+    public boolean existById(Long id) {
+        return id != null && repository.existsById(id);
+    }
+
 
 }
 

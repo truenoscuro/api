@@ -1,6 +1,6 @@
 package org.nofre.api.base.feature.configuration.service;
 
-import org.nofre.api.base.common.crud.repository.GenericSpecification;
+import org.nofre.api.base.common.crud.repository.specification.GenericSpecification;
 import org.nofre.api.base.common.crud.service.CommonCrudServiceImp;
 import org.nofre.api.base.common.crud.service.CrudService;
 import org.nofre.api.base.feature.configuration.ConfigurationMapper;
@@ -27,7 +27,9 @@ public class ConfigurationServiceImp extends CommonCrudServiceImp<
 
     @Override
     public void deleteById(Long id) {
+        throw new UnsupportedOperationException("No se pueden eliminar configuraciones");
     }
+
 
     @Override
     public ConfigurationDto findByKey(String key) {

@@ -1,6 +1,7 @@
 package org.nofre.api.base.common.crud.service;
 
 import io.micrometer.tracing.annotation.SpanTag;
+import org.nofre.api.base.common.crud.controller.PaginatedSearch;
 import org.nofre.api.base.common.crud.exception.CommonCrudException;
 import org.nofre.api.base.common.crud.model.CommonDto;
 import org.nofre.api.base.common.crud.model.Paginated;
@@ -23,5 +24,7 @@ public interface CommonCrudService<D extends CommonDto> {
             Map<String, String> filters
     ) throws CommonCrudException;
 
-    boolean noExistById(Long id) throws CommonCrudException;
+    Paginated<D> getPaginatedList(PaginatedSearch filter) throws CommonCrudException;
+
+    boolean existById(Long id) throws CommonCrudException;
 }
