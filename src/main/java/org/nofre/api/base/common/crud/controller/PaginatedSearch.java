@@ -1,7 +1,7 @@
 package org.nofre.api.base.common.crud.controller;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.nofre.api.base.common.crud.repository.specification.FilterGroup;
+import org.nofre.api.base.common.crud.entity.specification.FilterGroup;
 
 public record PaginatedSearch(
         @JsonProperty(defaultValue = "0")

@@ -4,8 +4,8 @@ import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.IterableMapping;
 import org.mapstruct.MapperConfig;
 import org.mapstruct.ReportingPolicy;
+import org.nofre.api.base.common.crud.entity.CommonEntity;
 import org.nofre.api.base.common.crud.model.CommonDto;
-import org.nofre.api.base.common.crud.repository.CommonEntity;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package org.nofre.api.base.common.crud.repository.specification;
+package org.nofre.api.base.common.crud.entity.specification;
 
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Path;

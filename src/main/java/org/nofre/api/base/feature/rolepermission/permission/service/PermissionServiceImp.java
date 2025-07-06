@@ -1,6 +1,6 @@
 package org.nofre.api.base.feature.rolepermission.permission.service;
 
-import org.nofre.api.base.common.crud.repository.specification.GenericSpecification;
+import org.nofre.api.base.common.crud.entity.specification.GenericSpecification;
 import org.nofre.api.base.common.crud.service.CommonCrudServiceImp;
 import org.nofre.api.base.common.crud.service.CrudService;
 import org.nofre.api.base.feature.rolepermission.permission.PermissionMapper;

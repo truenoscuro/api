@@ -1,10 +1,10 @@
-package org.nofre.api.base.common.crud.repository.specification;
+package org.nofre.api.base.common.crud.entity.specification;
 
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.Path;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
-import org.nofre.api.base.common.crud.repository.CommonEntity;
+import org.nofre.api.base.common.crud.entity.CommonEntity;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 

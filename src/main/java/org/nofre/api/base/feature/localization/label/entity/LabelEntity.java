@@ -3,7 +3,7 @@ package org.nofre.api.base.feature.localization.label.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.nofre.api.base.common.crud.repository.CommonEntity;
+import org.nofre.api.base.common.crud.entity.CommonEntity;
 import org.nofre.api.base.feature.localization.labelgroup.entity.LabelGroupEntity;
 import org.nofre.api.base.feature.localization.translation.entity.TranslationEntity;
 

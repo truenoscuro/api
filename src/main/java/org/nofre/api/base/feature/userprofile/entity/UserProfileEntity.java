@@ -3,7 +3,7 @@ package org.nofre.api.base.feature.userprofile.entity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.nofre.api.base.common.crud.repository.CommonEntity;
+import org.nofre.api.base.common.crud.entity.CommonEntity;
 import org.nofre.api.base.feature.user.entity.UserEntity;
 
 @Getter
