@@ -1,5 +1,6 @@
 package org.nofre.api.base.feature.localization.translation.mapper;
 
+import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.nofre.api.base.common.crud.mapper.BasicMapping;
@@ -19,9 +20,6 @@ public interface TranslationBasicMapper extends CommonCrudMapper<TranslationEnti
     TranslationDto toDto(TranslationEntity entity);
 
     @WithRelations
-    @Mapping(target = "label", ignore = true)
-    @Mapping(target = "language", ignore = true)
-    @Mapping(target = "languageId", source = "language.id")
-    @Mapping(target = "labelId", source = "label.id")
+    @InheritConfiguration(name = "toDto")
     TranslationDto toDtoWithRelations(TranslationEntity entity);
 }

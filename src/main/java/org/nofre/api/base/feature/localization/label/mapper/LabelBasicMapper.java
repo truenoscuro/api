@@ -1,5 +1,6 @@
 package org.nofre.api.base.feature.localization.label.mapper;
 
+import org.mapstruct.InheritConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.nofre.api.base.common.crud.mapper.BasicMapping;
@@ -18,8 +19,6 @@ public interface LabelBasicMapper extends CommonCrudMapper<LabelEntity, LabelDto
     LabelDto toDto(LabelEntity entity);
 
     @WithRelations
-    @Mapping(target = "labelGroupId", source = "labelGroup.id")
-    @Mapping(target = "translations", ignore = true)
-    @Mapping(target = "labelGroup", ignore = true)
+    @InheritConfiguration(name = "toDto")
     LabelDto toDtoWithRelations(LabelEntity entity);
 }
