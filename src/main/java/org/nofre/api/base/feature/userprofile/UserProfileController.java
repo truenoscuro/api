@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@ApiRestController("info-users")
+@ApiRestController("user-profiles")
 public class UserProfileController extends CommonCrudControllerImp<UserProfileDto, UserProfileService> {
     public UserProfileController(UserProfileService service) {
         super(service);
