@@ -1,5 +1,6 @@
 package org.nofre.api.base.feature.configuration;
 
+import io.swagger.v3.oas.annotations.Parameter;
 import org.nofre.api.base.common.controller.ApiRestController;
 import org.nofre.api.base.common.controller.model.CommonRq;
 import org.nofre.api.base.common.controller.model.CommonRs;
@@ -20,7 +21,7 @@ public class ConfigurationController extends CommonCrudControllerImp<Configurati
 
     @PostMapping
     public ResponseEntity<CommonRs<ConfigurationDto>> saveItem(
-            @ModelAttribute("authority") String authority,
+            @Parameter(hidden = true) @ModelAttribute("authority") String authority,
             @RequestBody CommonRq<ConfigurationDto> rq) throws CommonCrudException {
         throw new CommonCrudException("No se pueden añadir configuraciones");
     }
@@ -28,7 +29,7 @@ public class ConfigurationController extends CommonCrudControllerImp<Configurati
 
     @DeleteMapping("{id}")
     public ResponseEntity<CommonRs<Void>> deleteItem(
-            @ModelAttribute("authority") String authority,
+            @Parameter(hidden = true) @ModelAttribute("authority") String authority,
             @PathVariable Long id) throws CommonCrudException {
         throw new CommonCrudException("No se pueden eliminar configuraciones");
     }

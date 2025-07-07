@@ -1,6 +1,7 @@
 package org.nofre.api.base.common.crud.controller;
 
 import io.micrometer.observation.annotation.Observed;
+import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import org.nofre.api.base.common.controller.CommonController;
 import org.nofre.api.base.common.controller.model.CommonRq;
@@ -36,7 +37,9 @@ public abstract class CommonCrudControllerImp<D extends CommonDto, S extends Com
      */
     @GetMapping("{id}")
     @PreAuthorize("hasAuthority(#authority+'_READ')")
-    public ResponseEntity<CommonRs<D>> getItem(@ModelAttribute("authority") String authority, @PathVariable Long id) throws CommonCrudException {
+    public ResponseEntity<CommonRs<D>> getItem(
+            @Parameter(hidden = true) @ModelAttribute("authority") String authority,
+            @PathVariable Long id) throws CommonCrudException {
         return getResponse(service.getById(id));
     }
 
@@ -53,7 +56,13 @@ public abstract class CommonCrudControllerImp<D extends CommonDto, S extends Com
      */
     @GetMapping
     @PreAuthorize("hasAuthority(#authority+'_READ')")
-    public ResponseEntity<CommonRs<Paginated<D>>> getPaginatedList(@ModelAttribute("authority") String authority, @RequestParam(defaultValue = "0") Integer offset, @RequestParam(defaultValue = "50") Integer limit, @RequestParam(defaultValue = "id") String sort, @RequestParam(defaultValue = "ASC") String dir, @RequestParam(required = false) Map<String, String> filters) throws CommonCrudException {
+    public ResponseEntity<CommonRs<Paginated<D>>> getPaginatedList(
+            @Parameter(hidden = true) @ModelAttribute("authority") String authority,
+            @RequestParam(defaultValue = "0") Integer offset,
+            @RequestParam(defaultValue = "50") Integer limit,
+            @RequestParam(defaultValue = "id") String sort,
+            @RequestParam(defaultValue = "ASC") String dir,
+            @RequestParam(required = false) Map<String, String> filters) throws CommonCrudException {
         //ELiminamos los filtros que no vamos a usar
         if (!filters.isEmpty()) {
             filters.remove("offset");
@@ -73,7 +82,9 @@ public abstract class CommonCrudControllerImp<D extends CommonDto, S extends Com
      */
     @PostMapping
     @PreAuthorize("hasAuthority(#authority+'_CREATE')")
-    public ResponseEntity<CommonRs<D>> saveItem(@ModelAttribute("authority") String authority, @RequestBody CommonRq<D> rq) throws CommonCrudException {
+    public ResponseEntity<CommonRs<D>> saveItem(
+            @Parameter(hidden = true) @ModelAttribute("authority") String authority,
+            @RequestBody CommonRq<D> rq) throws CommonCrudException {
         return createdResponse(service.save(rq.data()));
     }
 
@@ -86,7 +97,7 @@ public abstract class CommonCrudControllerImp<D extends CommonDto, S extends Com
      */
     @PutMapping
     @PreAuthorize("hasAuthority(#authority+'_UPDATE')")
-    public ResponseEntity<CommonRs<D>> updateItem(@ModelAttribute("authority") String authority, @RequestBody CommonRq<D> rq) throws CommonCrudException {
+    public ResponseEntity<CommonRs<D>> updateItem(@Parameter(hidden = true) @ModelAttribute("authority") String authority, @RequestBody CommonRq<D> rq) throws CommonCrudException {
         return updatedResponse(service.update(rq.data()));
     }
 
@@ -100,7 +111,7 @@ public abstract class CommonCrudControllerImp<D extends CommonDto, S extends Com
      */
     @DeleteMapping("{id}")
     @PreAuthorize("hasAuthority(#authority+'_DELETE')")
-    public ResponseEntity<CommonRs<Void>> deleteItem(@ModelAttribute("authority") String authority, @PathVariable Long id) throws CommonCrudException {
+    public ResponseEntity<CommonRs<Void>> deleteItem(@Parameter(hidden = true) @ModelAttribute("authority") String authority, @PathVariable Long id) throws CommonCrudException {
         service.deleteById(id);
         return deletedResponse();
     }
@@ -115,7 +126,7 @@ public abstract class CommonCrudControllerImp<D extends CommonDto, S extends Com
      */
     @PostMapping("search")
     @PreAuthorize("hasAuthority(#authority+'_READ')")
-    public ResponseEntity<CommonRs<Paginated<D>>> search(@ModelAttribute("authority") String authority, @RequestBody CommonRq<PaginatedSearch> rq) throws CommonCrudException {
+    public ResponseEntity<CommonRs<Paginated<D>>> search(@Parameter(hidden = true) @ModelAttribute("authority") String authority, @RequestBody CommonRq<PaginatedSearch> rq) throws CommonCrudException {
         return postResponse(service.getPaginatedList(rq.data()));
     }
 
