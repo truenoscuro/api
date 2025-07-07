@@ -8,6 +8,6 @@ import org.nofre.api.base.feature.rolepermission.role.model.RoleDto;
 public class RoleController extends CommonCrudControllerImp<RoleDto, RoleService> {
 
     public RoleController(RoleService service) {
-        super(service);
+        super(service, "ROLE");
     }
 }

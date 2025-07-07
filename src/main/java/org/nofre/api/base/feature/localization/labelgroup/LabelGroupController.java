@@ -8,7 +8,7 @@ import org.nofre.api.base.feature.localization.labelgroup.model.LabelGroupDto;
 public class LabelGroupController extends CommonCrudControllerImp<LabelGroupDto, LabelGroupService> {
 
     public LabelGroupController(LabelGroupService service) {
-        super(service);
+        super(service, "LABEL_GROUP");
     }
 
 }

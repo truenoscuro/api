@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class AuthenticationController extends CommonController {
 
     private final AuthenticationService authenticationService;
-
+    
     @PostMapping("login")
     public ResponseEntity<CommonRs<AuthRs>> login(@RequestBody CommonRq<AuthUser> authUser, @RequestParam(required = false, defaultValue = "NONE") String method) throws EmailException, LoginException {
         return postResponse(authenticationService.getAuthRs(authUser.data(), method));

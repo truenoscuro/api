@@ -14,7 +14,7 @@ import java.util.Map;
 @ApiRestController("translations")
 public class TranslationController extends CommonCrudControllerImp<TranslationDto, TranslationService> {
     public TranslationController(TranslationService service) {
-        super(service);
+        super(service, "TRANS");
     }
 
 

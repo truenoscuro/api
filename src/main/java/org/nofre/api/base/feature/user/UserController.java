@@ -9,7 +9,7 @@ public class UserController extends CommonCrudControllerImp<UserDto, UserService
 
 
     public UserController(UserService service) {
-        super(service);
+        super(service, "USER");
     }
 
 

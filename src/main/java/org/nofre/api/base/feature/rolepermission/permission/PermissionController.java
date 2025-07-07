@@ -8,7 +8,7 @@ import org.nofre.api.base.feature.rolepermission.permission.model.PermissionDto;
 public class PermissionController extends CommonCrudControllerImp<PermissionDto, PermissionService> {
 
     public PermissionController(PermissionService service) {
-        super(service);
+        super(service, "PER");
     }
 
 }

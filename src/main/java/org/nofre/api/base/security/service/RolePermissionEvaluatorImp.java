@@ -1,6 +1,5 @@
 package org.nofre.api.base.security.service;
 
-import io.micrometer.observation.annotation.Observed;
 import lombok.Getter;
 import org.nofre.api.base.feature.rolepermission.role.entity.RoleEntity;
 import org.nofre.api.base.feature.rolepermission.role.entity.RoleRepository;
@@ -36,7 +35,6 @@ public class RolePermissionEvaluatorImp implements PermissionEvaluator, RolePerm
     }
 
     @Override
-    @Observed
     public void loadRolePermissionsAndHierarchy() {
         List<RoleEntity> roles = roleRepository.findAllEager();
         loadRolePermissions(roles);

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @ApiRestController("user-profiles")
 public class UserProfileController extends CommonCrudControllerImp<UserProfileDto, UserProfileService> {
     public UserProfileController(UserProfileService service) {
-        super(service);
+        super(service, "USER_DETAIL");
     }
 
     @GetMapping("me")

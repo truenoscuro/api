@@ -10,17 +10,22 @@ import org.nofre.api.base.common.crud.model.CommonDto;
 import org.nofre.api.base.common.crud.model.Paginated;
 import org.nofre.api.base.common.crud.service.CommonCrudService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
 @Observed
 @RequiredArgsConstructor
-public abstract class CommonCrudControllerImp<D extends CommonDto, S extends CommonCrudService<D>>
-        extends CommonController {
+public abstract class CommonCrudControllerImp<D extends CommonDto, S extends CommonCrudService<D>> extends CommonController {
 
     protected final S service;
+    private final String authority;
 
+    @ModelAttribute("authority")
+    public String getAuthority() {
+        return authority.toUpperCase().trim();
+    }
 
     /**
      * Recupera un elemento individual por su ID.
@@ -30,7 +35,8 @@ public abstract class CommonCrudControllerImp<D extends CommonDto, S extends Com
      * @throws CommonCrudException si ocurre un error al recuperar el elemento
      */
     @GetMapping("{id}")
-    public ResponseEntity<CommonRs<D>> getItem(@PathVariable Long id) throws CommonCrudException {
+    @PreAuthorize("hasAuthority(#authority+'_READ')")
+    public ResponseEntity<CommonRs<D>> getItem(@ModelAttribute("authority") String authority, @PathVariable Long id) throws CommonCrudException {
         return getResponse(service.getById(id));
     }
 
@@ -46,13 +52,8 @@ public abstract class CommonCrudControllerImp<D extends CommonDto, S extends Com
      * @throws CommonCrudException si ocurre un error durante la recuperación de la lista paginada
      */
     @GetMapping
-    public ResponseEntity<CommonRs<Paginated<D>>> getPaginatedList(
-            @RequestParam(defaultValue = "0") Integer offset,
-            @RequestParam(defaultValue = "50") Integer limit,
-            @RequestParam(defaultValue = "id") String sort,
-            @RequestParam(defaultValue = "ASC") String dir,
-            @RequestParam(required = false) Map<String, String> filters
-    ) throws CommonCrudException {
+    @PreAuthorize("hasAuthority(#authority+'_READ')")
+    public ResponseEntity<CommonRs<Paginated<D>>> getPaginatedList(@ModelAttribute("authority") String authority, @RequestParam(defaultValue = "0") Integer offset, @RequestParam(defaultValue = "50") Integer limit, @RequestParam(defaultValue = "id") String sort, @RequestParam(defaultValue = "ASC") String dir, @RequestParam(required = false) Map<String, String> filters) throws CommonCrudException {
         //ELiminamos los filtros que no vamos a usar
         if (!filters.isEmpty()) {
             filters.remove("offset");
@@ -71,7 +72,8 @@ public abstract class CommonCrudControllerImp<D extends CommonDto, S extends Com
      * @throws CommonCrudException si ocurre un error durante la operación de guardado
      */
     @PostMapping
-    public ResponseEntity<CommonRs<D>> saveItem(@RequestBody CommonRq<D> rq) throws CommonCrudException {
+    @PreAuthorize("hasAuthority(#authority+'_CREATE')")
+    public ResponseEntity<CommonRs<D>> saveItem(@ModelAttribute("authority") String authority, @RequestBody CommonRq<D> rq) throws CommonCrudException {
         return createdResponse(service.save(rq.data()));
     }
 
@@ -83,7 +85,8 @@ public abstract class CommonCrudControllerImp<D extends CommonDto, S extends Com
      * @throws CommonCrudException si ocurre un error durante la operación de actualización
      */
     @PutMapping
-    public ResponseEntity<CommonRs<D>> updateItem(@RequestBody CommonRq<D> rq) throws CommonCrudException {
+    @PreAuthorize("hasAuthority(#authority+'_UPDATE')")
+    public ResponseEntity<CommonRs<D>> updateItem(@ModelAttribute("authority") String authority, @RequestBody CommonRq<D> rq) throws CommonCrudException {
         return updatedResponse(service.update(rq.data()));
     }
 
@@ -96,7 +99,8 @@ public abstract class CommonCrudControllerImp<D extends CommonDto, S extends Com
      * @throws CommonCrudException si ocurre un error durante el proceso de eliminación
      */
     @DeleteMapping("{id}")
-    public ResponseEntity<CommonRs<Void>> deleteItem(@PathVariable Long id) throws CommonCrudException {
+    @PreAuthorize("hasAuthority(#authority+'_DELETE')")
+    public ResponseEntity<CommonRs<Void>> deleteItem(@ModelAttribute("authority") String authority, @PathVariable Long id) throws CommonCrudException {
         service.deleteById(id);
         return deletedResponse();
     }
@@ -110,9 +114,8 @@ public abstract class CommonCrudControllerImp<D extends CommonDto, S extends Com
      * @throws CommonCrudException si ocurre un error durante la ejecución de la operación de búsqueda
      */
     @PostMapping("search")
-    public ResponseEntity<CommonRs<Paginated<D>>> search(
-            @RequestBody CommonRq<PaginatedSearch> rq
-    ) throws CommonCrudException {
+    @PreAuthorize("hasAuthority(#authority+'_READ')")
+    public ResponseEntity<CommonRs<Paginated<D>>> search(@ModelAttribute("authority") String authority, @RequestBody CommonRq<PaginatedSearch> rq) throws CommonCrudException {
         return postResponse(service.getPaginatedList(rq.data()));
     }
 
