@@ -32,9 +32,9 @@ public class ConfigurationServiceImp extends CommonCrudServiceImp<
 
 
     @Override
-    public ConfigurationDto findByKey(String key) {
+    public String findByKey(String key) {
         return repository.findByKey(key.toLowerCase())
-                .map(mapper::toDto)
+                .map(ConfigurationEntity::getValue)
                 .orElseThrow(() -> new KeyException(key));
     }
 }

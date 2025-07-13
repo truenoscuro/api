@@ -7,16 +7,15 @@ import org.nofre.api.base.common.crud.mapper.CommonCrudMapper;
 import org.nofre.api.base.common.crud.mapper.WithRelations;
 import org.nofre.api.base.feature.localization.language.entity.LanguageEntity;
 import org.nofre.api.base.feature.localization.language.model.LanguageDto;
-import org.nofre.api.base.feature.localization.translation.mapper.TranslationBasicMapper;
+import org.nofre.api.base.feature.localization.translation.TranslationMapper;
 
-@Mapper(uses = {TranslationBasicMapper.class})
+@Mapper(uses = {TranslationMapper.class})
 public interface LanguageMapper extends CommonCrudMapper<LanguageEntity, LanguageDto> {
 
 
     @BasicMapping
     @Mapping(target = "translations", ignore = true)
     LanguageDto toDto(LanguageEntity entity);
-
 
     @WithRelations
     @Mapping(target = "translations", qualifiedBy = WithRelations.class)

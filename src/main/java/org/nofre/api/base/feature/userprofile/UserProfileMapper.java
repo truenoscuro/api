@@ -13,7 +13,7 @@ import org.nofre.api.base.feature.userprofile.model.UserProfileDto;
 public interface UserProfileMapper extends CommonCrudMapper<UserProfileEntity, UserProfileDto> {
 
     @BasicMapping
-    @Mapping(target = "userId", source = "user.id")
+    @Mapping(target = "user.id", source = "user.id")
     UserProfileDto toDto(UserProfileEntity entity);
 
     @WithRelations

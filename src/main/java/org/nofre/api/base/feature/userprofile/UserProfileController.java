@@ -12,12 +12,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 @ApiRestController("user-profiles")
 public class UserProfileController extends CommonCrudControllerImp<UserProfileDto, UserProfileService> {
     public UserProfileController(UserProfileService service) {
-        super(service, "USER_DETAIL");
+        super(service, "USER_PROFILE");
     }
 
     @GetMapping("me")
-    public ResponseEntity<CommonRs<UserProfileDto>> getMeInfoUser() throws EmailException {
+    public ResponseEntity<CommonRs<UserProfileDto>> getMeProfile() throws EmailException {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         return getResponse(service.getByEmail(email));
     }
+
 }

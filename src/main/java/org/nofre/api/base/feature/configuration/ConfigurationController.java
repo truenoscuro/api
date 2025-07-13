@@ -8,6 +8,7 @@ import org.nofre.api.base.common.crud.controller.CommonCrudControllerImp;
 import org.nofre.api.base.common.crud.exception.CommonCrudException;
 import org.nofre.api.base.feature.configuration.model.ConfigurationDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -15,11 +16,12 @@ import org.springframework.web.bind.annotation.*;
 public class ConfigurationController extends CommonCrudControllerImp<ConfigurationDto, ConfigurationService> {
 
     public ConfigurationController(ConfigurationService service) {
-        super(service, "CONF");
+        super(service, "CONFIGURATION");
     }
 
 
     @PostMapping
+    @PreAuthorize("hasAuthority('CONFIGURATION_SAVE')")
     public ResponseEntity<CommonRs<ConfigurationDto>> saveItem(
             @Parameter(hidden = true) @ModelAttribute("authority") String authority,
             @RequestBody CommonRq<ConfigurationDto> rq) throws CommonCrudException {
@@ -28,6 +30,7 @@ public class ConfigurationController extends CommonCrudControllerImp<Configurati
 
 
     @DeleteMapping("{id}")
+    @PreAuthorize("hasAuthority('CONFIGURATION_DELETE')")
     public ResponseEntity<CommonRs<Void>> deleteItem(
             @Parameter(hidden = true) @ModelAttribute("authority") String authority,
             @PathVariable Long id) throws CommonCrudException {

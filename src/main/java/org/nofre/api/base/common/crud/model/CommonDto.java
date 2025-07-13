@@ -11,7 +11,7 @@ import lombok.ToString;
 @EqualsAndHashCode(of = "id")
 public abstract class CommonDto {
     private Long id;
-    private boolean active;
+    private boolean active = true;
     private String createdAt;
     private String createdBy;
     private String updatedAt;

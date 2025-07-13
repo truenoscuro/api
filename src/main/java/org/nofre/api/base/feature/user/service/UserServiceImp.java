@@ -36,8 +36,6 @@ public class UserServiceImp extends CommonCrudServiceImp<UserEntity, UserDto, Us
     public UserDto save(UserDto user) throws RegisterPasswordException {
         //ES IMPORTANTE QUE AL  CANVIAR EL SAVE TAMBIEN CAMBIAMOS EL UPDATE
         UserEntity entity = mapper.toEntity(user);
-        //Tendriamos que cargar los roles si no tiene uno por defecto
-
 
         boolean havePassword = user.getPassword() != null && !user.getPassword().isBlank();
 
@@ -48,14 +46,23 @@ public class UserServiceImp extends CommonCrudServiceImp<UserEntity, UserDto, Us
         if (havePassword) {
             entity.setPassword(passwordEncoder.encode(entity.getPassword()));
         }
+
         return mapper.toDto(repository.save(entity));
     }
 
 
     @Override
     public UserDto getByEmail(String email) throws EmailException {
-        return repository.findByEmail(email).map(mapper::toDtoWithRelations)
-                .orElseThrow(EmailException::new);
+        return repository.findByEmail(email).map(mapper::toDtoWithRelations).orElseThrow(EmailException::new);
     }
 
+    @Override
+    public boolean existsByEmail(String email) {
+        return repository.existsByEmail(email);
+    }
+
+    @Override
+    public boolean isFirstRegister() {
+        return repository.count() == 0;
+    }
 }

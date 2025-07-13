@@ -5,7 +5,7 @@ import org.mapstruct.Mapping;
 import org.nofre.api.base.common.crud.mapper.BasicMapping;
 import org.nofre.api.base.common.crud.mapper.CommonCrudMapper;
 import org.nofre.api.base.common.crud.mapper.WithRelations;
-import org.nofre.api.base.feature.rolepermission.role.RoleMapper;
+import org.nofre.api.base.feature.security.role.RoleMapper;
 import org.nofre.api.base.feature.user.entity.UserEntity;
 import org.nofre.api.base.feature.user.model.UserDto;
 
@@ -21,5 +21,4 @@ public interface UserMapper extends CommonCrudMapper<UserEntity, UserDto> {
     @WithRelations
     @Mapping(target = "roles", qualifiedBy = WithRelations.class)
     UserDto toDtoWithRelations(UserEntity entity);
-
 }

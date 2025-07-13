@@ -1,15 +1,17 @@
 package org.nofre.api.base.common.controller;
 
 
-import io.micrometer.observation.annotation.Observed;
+import lombok.RequiredArgsConstructor;
 import org.nofre.api.base.common.controller.model.CommonRs;
 import org.nofre.api.base.common.crud.model.Paginated;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-@Observed
+
+@RequiredArgsConstructor
 public abstract class CommonController {
+
 
     public <T> ResponseEntity<CommonRs<T>> response(T data, HttpStatus status, HttpMethod method) {
         return ResponseEntity.ok(new CommonRs<>(data, status, method));

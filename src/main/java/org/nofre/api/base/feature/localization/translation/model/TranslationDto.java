@@ -12,8 +12,7 @@ import org.nofre.api.base.feature.localization.language.model.LanguageDto;
 @ToString(callSuper = true, exclude = {"language", "label"})
 @EqualsAndHashCode(callSuper = true, exclude = {"language", "label"})
 public class TranslationDto extends CommonDto {
-    private Long labelId;
-    private Long languageId;
+
     private String value;
 
     @JsonIgnoreProperties({"translations"})

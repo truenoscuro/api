@@ -7,4 +7,8 @@ import org.nofre.api.base.feature.user.model.UserDto;
 public interface UserService extends CommonCrudService<UserDto> {
 
     UserDto getByEmail(String email) throws EmailException;
+
+    boolean existsByEmail(String email);
+
+    boolean isFirstRegister();
 }

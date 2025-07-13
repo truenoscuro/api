@@ -1,7 +1,7 @@
 package org.nofre.api.base.configuration;
 
 import lombok.RequiredArgsConstructor;
-import org.nofre.api.base.security.RolePermissionEvaluator;
+import org.nofre.api.base.configuration.security.RolePermissionEvaluator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.access.PermissionEvaluator;

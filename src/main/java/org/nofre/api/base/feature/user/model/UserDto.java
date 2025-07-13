@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.nofre.api.base.common.crud.model.CommonDto;
-import org.nofre.api.base.feature.rolepermission.role.model.RoleDto;
+import org.nofre.api.base.feature.security.role.model.RoleDto;
 
 import java.util.HashSet;
 import java.util.Set;

@@ -8,4 +8,6 @@ import java.util.Optional;
 @ObservedRepository
 public interface UserRepository extends CommonRepository<UserEntity> {
     Optional<UserEntity> findByEmail(String email);
+
+    boolean existsByEmail(String email);
 }

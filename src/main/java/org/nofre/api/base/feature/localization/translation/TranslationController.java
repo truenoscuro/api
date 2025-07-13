@@ -6,6 +6,7 @@ import org.nofre.api.base.common.crud.controller.CommonCrudControllerImp;
 import org.nofre.api.base.feature.localization.language.exception.UnExistLanguageCode;
 import org.nofre.api.base.feature.localization.translation.model.TranslationDto;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -14,7 +15,7 @@ import java.util.Map;
 @ApiRestController("translations")
 public class TranslationController extends CommonCrudControllerImp<TranslationDto, TranslationService> {
     public TranslationController(TranslationService service) {
-        super(service, "TRANS");
+        super(service, "TRANSLATION");
     }
 
 
@@ -26,6 +27,7 @@ public class TranslationController extends CommonCrudControllerImp<TranslationDt
      * del mapa representan las claves de traducción y sus valores correspondientes en el idioma especificado
      */
     @GetMapping("lang/{lang}")
+    @PreAuthorize("hasAuthority('TRANSLATION_READ') || hasRole('SUPER_ADMIN')")
     public ResponseEntity<CommonRs<Map<String, String>>> getTranslationsByLang(@PathVariable String lang) throws UnExistLanguageCode {
         return postResponse(service.getTranslationsByLang(lang));
     }
